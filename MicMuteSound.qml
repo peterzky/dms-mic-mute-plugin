@@ -16,7 +16,6 @@ PluginComponent {
         id: muteSoundPlayer
         source: Qt.resolvedUrl("sounds/mic-muted.mp3")
         audioOutput: AudioOutput {
-            device: AudioService.mediaDevices?.defaultAudioOutput ?? null
             volume: root.volume / 100
         }
 
@@ -38,7 +37,6 @@ PluginComponent {
         id: unmuteSoundPlayer
         source: Qt.resolvedUrl("sounds/mic-unmute.mp3")
         audioOutput: AudioOutput {
-            device: AudioService.mediaDevices?.defaultAudioOutput ?? null
             volume: root.volume / 100
         }
 
