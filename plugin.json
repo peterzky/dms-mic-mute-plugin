@@ -1,0 +1,12 @@
+{
+    "id": "micMuteSound",
+    "name": "Mic Mute Sound",
+    "description": "Plays audio feedback when microphone is muted or unmuted",
+    "version": "1.0.0",
+    "author": "peterzky",
+    "type": "daemon",
+    "capabilities": ["audio", "monitoring"],
+    "component": "./MicMuteSound.qml",
+    "icon": "mic",
+    "settings": "./MicMuteSoundSettings.qml"
+}
