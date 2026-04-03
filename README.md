@@ -4,14 +4,23 @@ Plays distinct audio feedback when the microphone is muted or unmuted.
 
 ## Features
 
-- **Mute sound**: Lower-pitched click (400Hz) when mic is muted
-- **Unmute sound**: Higher-pitched click (800Hz) when mic is unmuted
+- **Mute sound**: Audio feedback when mic is muted
+- **Unmute sound**: Audio feedback when mic is unmuted
+- **Volume control**: Adjustable volume (0-100%) for sound effects
 - Detects both IPC-triggered toggles (`dms ipc call audio micmute`) and hardware mute buttons
 - 100ms debounce to handle rapid state changes
+- Disposable sound processes (non-blocking playback)
 
 ## Installation
 
 Install via the DMS plugin browser or place this directory in your plugins folder.
+
+## Configuration
+
+In Settings → Plugins → Mic Mute Sound:
+
+- **Enable Mic Mute Sound**: Toggle the plugin on/off
+- **Volume**: Adjust the volume level for mute/unmute sounds (0-100%)
 
 ## Usage
 
@@ -24,11 +33,11 @@ Install via the DMS plugin browser or place this directory in your plugins folde
 
 ## Custom Sounds
 
-Replace the sound files in `sounds/` directory:
-- `mic-muted.wav` - Sound played when mic is muted
-- `mic-unmute.wav` - Sound played when mic is unmuted
+Replace the sound files in the `sounds/` directory:
+- `mic-muted.mp3` - Sound played when mic is muted
+- `mic-unmute.mp3` - Sound played when mic is unmuted
 
-Sound files must be in a format supported by `pw-play` (wav, ogg, flac, etc.).
+Sound files must be in a format supported by `pw-play` (mp3, wav, ogg, flac, etc.).
 
 ## Requirements
 

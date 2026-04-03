@@ -6,6 +6,7 @@
     "author": "peterzky",
     "type": "daemon",
     "capabilities": ["audio", "monitoring"],
+    "permissions": ["settings_read", "settings_write"],
     "component": "./MicMuteSound.qml",
     "icon": "mic",
     "settings": "./MicMuteSoundSettings.qml"

@@ -11,6 +11,8 @@ PluginComponent {
     // Track last known mute state to detect transitions
     property bool lastMutedState: AudioService.source?.audio?.muted ?? false
 
+    property int volume: pluginData.volume ?? 100
+
     // Debounce timer to prevent rapid state changes
     property bool pendingPlay: false
     property bool pendingMutedState: false
@@ -39,7 +41,7 @@ PluginComponent {
         Process {
             property string soundPath: ""
 
-            command: ["pw-play", soundPath]
+            command: ["pw-play", "--volume", (volume / 100).toString(), soundPath]
             running: true
 
             onExited: (exitCode, exitStatus) => {
