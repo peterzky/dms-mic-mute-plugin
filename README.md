@@ -9,7 +9,6 @@ Plays distinct audio feedback when the microphone is muted or unmuted.
 - **Volume control**: Adjustable volume (0-100%) for sound effects
 - Detects both IPC-triggered toggles (`dms ipc call audio micmute`) and hardware mute buttons
 - 100ms debounce to handle rapid state changes
-- Disposable sound processes (non-blocking playback)
 
 ## Installation
 
@@ -37,11 +36,11 @@ Replace the sound files in the `sounds/` directory:
 - `mic-muted.mp3` - Sound played when mic is muted
 - `mic-unmute.mp3` - Sound played when mic is unmuted
 
-Sound files must be in a format supported by `pw-play` (mp3, wav, ogg, flac, etc.).
+Sound files must be in a format supported by QtMultimedia MediaPlayer (mp3, wav, ogg, flac, etc.).
 
 ## Requirements
 
-- `pw-play` (part of PipeWire)
+- DankMaterialShell (QtMultimedia support included)
 
 ## License
 
