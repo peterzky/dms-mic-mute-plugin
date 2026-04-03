@@ -11,49 +11,28 @@ PluginComponent {
     property bool lastMutedState: AudioService.source?.audio?.muted ?? false
     property int volume: pluginData.volume ?? 100
 
-    // MediaPlayer for mute sound
     MediaPlayer {
         id: muteSoundPlayer
         source: Qt.resolvedUrl("sounds/mic-muted.mp3")
         audioOutput: AudioOutput {
             volume: root.volume / 100
         }
-
         onErrorOccurred: (error, errorString) => {
-            console.warn("MicMuteSound: Mute sound error:", errorString)
-        }
-
-        function replay() {
-            if (status === MediaPlayer.Loaded) {
-                stop()
-                position = 0
-                play()
-            }
+            console.warn("MicMuteSound: Mute sound error:", error, errorString)
         }
     }
 
-    // MediaPlayer for unmute sound
     MediaPlayer {
         id: unmuteSoundPlayer
         source: Qt.resolvedUrl("sounds/mic-unmute.mp3")
         audioOutput: AudioOutput {
             volume: root.volume / 100
         }
-
         onErrorOccurred: (error, errorString) => {
-            console.warn("MicMuteSound: Unmute sound error:", errorString)
-        }
-
-        function replay() {
-            if (status === MediaPlayer.Loaded) {
-                stop()
-                position = 0
-                play()
-            }
+            console.warn("MicMuteSound: Unmute sound error:", error, errorString)
         }
     }
 
-    // Debounce timer to prevent rapid state changes
     property bool pendingPlay: false
     property bool pendingMutedState: false
 
@@ -69,7 +48,6 @@ PluginComponent {
         }
     }
 
-    // Monitor IPC-triggered mute changes (dms ipc call audio micmute)
     Connections {
         target: AudioService
         function onMicMuteChanged() {
@@ -77,7 +55,6 @@ PluginComponent {
         }
     }
 
-    // Monitor hardware/external mute changes (mute button on headset, other apps)
     Connections {
         target: AudioService.source?.audio ?? null
         enabled: AudioService.source?.audio !== null
@@ -89,8 +66,6 @@ PluginComponent {
     function handleMuteStateChange() {
         const currentMuted = AudioService.source?.audio?.muted ?? false
 
-        console.info("MicMuteSound: mute state change detected, current:", currentMuted, "last:", lastMutedState)
-
         if (currentMuted === lastMutedState) {
             return
         }
@@ -98,24 +73,18 @@ PluginComponent {
         pendingPlay = true
         pendingMutedState = currentMuted
         debounceTimer.restart()
-
         lastMutedState = currentMuted
     }
 
     function playSoundForState(muted) {
         const player = muted ? muteSoundPlayer : unmuteSoundPlayer
-        console.info("MicMuteSound: playing", muted ? "mute" : "unmute", "sound")
-        player.replay()
+        player.play()
     }
 
     Component.onCompleted: {
-        console.info("MicMuteSound: Plugin started, monitoring mic mute state")
+        console.info("MicMuteSound: Plugin started")
         if (AudioService.source?.audio) {
             lastMutedState = AudioService.source.audio.muted
         }
-    }
-
-    Component.onDestruction: {
-        console.info("MicMuteSound: Plugin stopped")
     }
 }
