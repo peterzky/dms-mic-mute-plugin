@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__plugin_context-mode_context-mode__ctx_batch_execute",
+      "mcp__context7__resolve-library-id",
+      "mcp__plugin_context-mode_context-mode__ctx_search",
+      "Bash(git add:*)",
+      "Bash(git commit -m ':*)",
+      "Bash(systemctl:*)",
+      "Bash(journalctl --user -u dms.service -n 50 --no-pager)",
+      "Bash(dms ipc:*)",
+      "Bash(journalctl --user -u dms.service -n 20 --no-pager)",
+      "Bash(journalctl --user -u dms.service -n 30 --no-pager)",
+      "Bash(git push:*)"
+    ],
+    "additionalDirectories": [
+      "/home/peterzky/Repos/DankMaterialShell"
+    ]
+  }
+}
