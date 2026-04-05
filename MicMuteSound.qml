@@ -11,11 +11,17 @@ PluginComponent {
     property bool lastMutedState: AudioService.source?.audio?.muted ?? false
     property int volume: pluginData.volume ?? 100
 
+    MediaDevices {
+        id: mediaDevices
+    }
+
     MediaPlayer {
         id: muteSoundPlayer
         source: Qt.resolvedUrl("sounds/mic-muted.mp3")
         audioOutput: AudioOutput {
+            id: muteAudioOutput
             volume: root.volume / 100
+            device: mediaDevices.defaultAudioOutput
         }
         onErrorOccurred: (error, errorString) => {
             console.warn("MicMuteSound: Mute sound error:", error, errorString)
@@ -26,7 +32,9 @@ PluginComponent {
         id: unmuteSoundPlayer
         source: Qt.resolvedUrl("sounds/mic-unmute.mp3")
         audioOutput: AudioOutput {
+            id: unmuteAudioOutput
             volume: root.volume / 100
+            device: mediaDevices.defaultAudioOutput
         }
         onErrorOccurred: (error, errorString) => {
             console.warn("MicMuteSound: Unmute sound error:", error, errorString)
