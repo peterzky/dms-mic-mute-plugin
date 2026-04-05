@@ -15,13 +15,20 @@ PluginComponent {
         id: mediaDevices
     }
 
+    Connections {
+        target: mediaDevices
+        function onDefaultAudioOutputChanged() {
+            muteAudioOutput.device = mediaDevices.defaultAudioOutput
+            unmuteAudioOutput.device = mediaDevices.defaultAudioOutput
+        }
+    }
+
     MediaPlayer {
         id: muteSoundPlayer
         source: Qt.resolvedUrl("sounds/mic-muted.mp3")
         audioOutput: AudioOutput {
             id: muteAudioOutput
             volume: root.volume / 100
-            device: mediaDevices.defaultAudioOutput
         }
         onErrorOccurred: (error, errorString) => {
             console.warn("MicMuteSound: Mute sound error:", error, errorString)
@@ -34,7 +41,6 @@ PluginComponent {
         audioOutput: AudioOutput {
             id: unmuteAudioOutput
             volume: root.volume / 100
-            device: mediaDevices.defaultAudioOutput
         }
         onErrorOccurred: (error, errorString) => {
             console.warn("MicMuteSound: Unmute sound error:", error, errorString)
@@ -94,5 +100,8 @@ PluginComponent {
         if (AudioService.source?.audio) {
             lastMutedState = AudioService.source.audio.muted
         }
+        // Set initial audio output device
+        muteAudioOutput.device = mediaDevices.defaultAudioOutput
+        unmuteAudioOutput.device = mediaDevices.defaultAudioOutput
     }
 }
